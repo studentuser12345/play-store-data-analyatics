@@ -2,177 +2,227 @@
 
 ## 📌 Project Overview
 
-This project analyzes the **Google Play Store dataset** using **Python and Pandas** to understand app ratings, reviews, categories, pricing, and installation patterns.
+This project analyzes the **Google Play Store dataset** using Python and Pandas to understand app categories, ratings, reviews, pricing, installations, and other app characteristics.
 
-The project focuses on **data cleaning, missing-value handling, data formatting, exploratory data analysis (EDA), and extracting useful insights** from the dataset.
+The analysis focuses on **data cleaning, preprocessing, exploratory data analysis (EDA), and extracting meaningful insights** from the dataset.
 
 ---
 
 ## 🎯 Objectives
 
-The main objectives of this project are:
+* Analyze the distribution of apps across different categories.
+* Understand app ratings and review patterns.
+* Compare **free and paid applications**.
+* Identify highly reviewed and highly installed apps.
+* Analyze app categories based on average ratings.
+* Explore content ratings, pricing, and installation trends.
+* Extract useful insights from the Play Store dataset.
 
-* Clean and prepare the Google Play Store dataset.
-* Handle missing values appropriately.
-* Convert columns into suitable data types.
-* Analyze app ratings and reviews.
-* Compare free and paid applications.
-* Identify highly rated app categories.
-* Find apps with the highest number of reviews and installations.
-* Extract useful insights from the Play Store data.
+---
+
+## 📊 Dataset
+
+The dataset contains **10,841 rows and 13 columns** before cleaning.
+
+After preprocessing, the final dataset contains **10,840 rows and 13 columns**.
+
+### Dataset Features
+
+| Column           | Description                 |
+| ---------------- | --------------------------- |
+| `App`            | Application name            |
+| `Category`       | App category                |
+| `Rating`         | App rating                  |
+| `Reviews`        | Number of reviews           |
+| `Size`           | Application size            |
+| `Installs`       | Number of installations     |
+| `Type`           | Free or Paid                |
+| `Price`          | Application price           |
+| `Content Rating` | Target audience             |
+| `Genres`         | App genre                   |
+| `Last Updated`   | Last update date            |
+| `Current Ver`    | Current application version |
+| `Android Ver`    | Required Android version    |
 
 ---
 
 ## 🛠️ Technologies Used
 
-* **Python**
+* **Python 3.9**
 * **Pandas**
 * **NumPy**
 * **Jupyter Notebook**
+* **Matplotlib / Seaborn**
 
 ---
 
-## 📂 Dataset
+## 🔄 Data Analysis Workflow
 
-The project uses the **Google Play Store Apps dataset**, available in CSV format.
-
-The dataset contains information such as:
-
-* App name
-* Category
-* Rating
-* Reviews
-* Size
-* Installs
-* Type
-* Price
-* Content Rating
-* Genres
-* Last Updated
-* Current Version
-* Android Version
-
----
-
-## 🔧 Data Cleaning
-
-The following preprocessing steps were performed:
-
-### Missing Values
-
-Missing values were identified using:
-
-```python
-df.isnull().sum()
-```
-
-The following approaches were used:
-
-* Missing **Rating** values were replaced with the mean rating.
-* Missing **Current Ver** values were replaced with `Varies with device`.
-* Missing **Android Ver** values were replaced with `4.1 and up`.
-* Missing **Content Rating** values were replaced with `Everyone`.
-* Remaining rows containing missing values were removed.
-
-A backup of the original DataFrame was also created before modification.
-
-```python
-df_backup = df.copy()
-```
-
-### Data Type Formatting
-
-The `Reviews` column was converted into a numeric format:
-
-```python
-df['Reviews'] = df['Reviews'].astype('float')
+```text
+Dataset
+   ↓
+Data Loading
+   ↓
+Data Inspection
+   ↓
+Missing Value Detection
+   ↓
+Data Cleaning
+   ↓
+Data Type Conversion
+   ↓
+Exploratory Data Analysis
+   ↓
+Grouping & Aggregation
+   ↓
+Insight Extraction
 ```
 
 ---
 
-## 📊 Analysis Performed
+## 🧹 Data Cleaning
 
-The notebook performs several exploratory analyses, including:
+The dataset initially contained missing values in several columns.
 
-### 🔹 Apps Containing "Astrology"
+### Missing Values Identified
 
-The project checks the number of applications containing **"Astrology"** in their title.
+* `Rating` → **1,474**
+* `Type` → **1**
+* `Content Rating` → **1**
+* `Current Ver` → **8**
+* `Android Ver` → **3**
 
-**Result:** 3 apps were identified.
+### Handling Strategy
 
-### 🔹 Average App Rating
+* Missing `Rating` values were replaced using the **mean rating**.
+* Missing categorical values were replaced using their **most frequent values**.
+* The remaining missing record was removed using `dropna()`.
+* `Reviews` was converted from object/string format to a numeric data type.
 
-The overall average rating calculated in the notebook is approximately:
+After cleaning:
 
-**4.19**
+**10,840 rows × 13 columns**
 
-### 🔹 Rating by Category
+---
 
-The average rating of applications was calculated for each category.
+## 📈 Key Analysis & Findings
 
-The notebook identifies **Education** as having the highest average rating and **Dating** as having the lowest average rating.
+### ⭐ Average App Rating
 
-### 🔹 Five-Star Applications
+The average app rating in the cleaned dataset is approximately:
 
-The analysis identifies applications with a rating of exactly **5.0**.
+**4.19 / 5**
 
-**Result:** 274 apps have a five-star rating.
+---
 
-### 🔹 Average Number of Reviews
+### 🏆 Category Rating Analysis
 
-The average number of reviews per application was calculated.
+The project calculated the average rating for each of the **34 app categories**.
 
-**Result:** Approximately **444,152 reviews per app** on average.
+Examples:
 
-### 🔹 Free vs Paid Applications
+| Category          | Average Rating |
+| ----------------- | -------------: |
+| Education         |          4.388 |
+| Events            |          4.364 |
+| Art & Design      |          4.350 |
+| Books & Reference |          4.311 |
+| Game              |          4.283 |
+| Dating            |          4.008 |
 
-The project compares the number of free and paid applications.
+---
 
-| App Type | Number of Apps |
+### ⭐ Five-Star Apps
+
+The analysis identified:
+
+**274 apps with a 5.0 rating.**
+
+---
+
+### 💬 Review Analysis
+
+The average number of reviews per app was approximately:
+
+**444,153 reviews**
+
+The maximum review count in the dataset was:
+
+**78,158,306 reviews**
+
+The app associated with this maximum was **Facebook**.
+
+---
+
+### 💰 Free vs Paid Apps
+
+The dataset contains:
+
+* **10,039 Free apps**
+* **800 Paid apps**
+
+Average ratings:
+
+| App Type | Average Rating |
 | -------- | -------------: |
-| Free     |         10,038 |
-| Paid     |            799 |
-
-### 🔹 Free vs Paid Ratings
-
-The average rating was compared between free and paid applications using:
-
-```python
-df.groupby('Type')['Rating'].mean()
-```
-
-The notebook observes that paid applications have a higher average rating than free applications.
-
-### 🔹 Most Reviewed Applications
-
-The project identifies applications with the highest number of reviews using sorting on the `Reviews` column.
-
-### 🔹 Top Installed Applications
-
-The notebook also analyzes the applications with the highest installation counts.
+| Free     |          4.187 |
+| Paid     |          4.253 |
 
 ---
 
-## 📈 Key Insights
+### 📥 Highly Installed Apps
 
-Some of the insights obtained from the analysis include:
+The analysis examined the most-installed applications, including:
 
-* The average Play Store app rating is approximately **4.19**.
-* **Education** has the highest average category rating in the analysis.
-* **Dating** has the lowest average category rating in the analysis.
-* **274 applications** have a perfect 5-star rating.
-* The dataset contains significantly more **free applications** than paid applications.
-* Paid applications have a higher average rating than free applications in this analysis.
-* The project identifies the most reviewed and highly installed applications.
+1. Temple Run 2
+2. Google Duo - High Quality Video Calls
+3. Viber Messenger
+4. Google Calendar
+5. Dropbox
+
+---
+
+### 🔮 Astrology Apps
+
+The analysis searched application names containing **"Astrology"** and identified:
+
+**3 applications**
+
+---
+
+## 📊 Statistical Analysis
+
+Descriptive statistics were performed on the dataset to examine:
+
+* Mean
+* Median
+* Standard deviation
+* Minimum and maximum values
+* Unique values
+* Frequency distributions
+
+For example, the median number of reviews was approximately **2,094**, while the 75th percentile was approximately **54,776 reviews**.
+
+---
+
+## 💡 Key Insights
+
+* The Play Store dataset contains apps across **34 different categories**.
+* The majority of applications are **free**, with 10,039 free apps compared with 800 paid apps.
+* The overall average app rating is approximately **4.19**.
+* **274 apps** achieved a perfect 5.0 rating.
+* Education had an average rating of approximately **4.39**.
+* Facebook recorded the highest number of reviews in the analyzed dataset.
+* The analysis demonstrates how ratings, reviews, pricing, categories, and installations can be explored using Python.
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-Google-Play-Store-Data-Analysis/
+Google-Playstore-Data-Analysis/
 │
-├── project 09 playstore data analysis.ipynb
+├── data analysis.ipynb
 ├── googleplaystore.csv
 └── README.md
 ```
@@ -184,56 +234,45 @@ Google-Play-Store-Data-Analysis/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-github-repository-url>
+git clone <your-repository-url>
 ```
 
-### 2. Install the required libraries
+### 2. Install dependencies
 
 ```bash
-pip install pandas numpy jupyter
+pip install pandas numpy matplotlib seaborn jupyter
 ```
 
-### 3. Open the notebook
+### 3. Open Jupyter Notebook
 
 ```bash
 jupyter notebook
 ```
 
-Then open:
+### 4. Open
 
 ```text
-project 09 playstore data analysis.ipynb
+data analysis.ipynb
 ```
 
-### 4. Update the dataset path
-
-Change the CSV file path in the notebook to the location of your downloaded dataset.
+Run the notebook cells sequentially to reproduce the analysis.
 
 ---
 
-## 💡 Skills Demonstrated
+## 📌 Skills Demonstrated
 
-This project demonstrates practical experience with:
-
-* Data Cleaning
-* Missing Value Handling
-* Data Type Conversion
-* Exploratory Data Analysis
-* Pandas DataFrames
-* GroupBy Operations
-* Sorting and Filtering
-* Descriptive Statistics
-* Data Analysis using Python
-* Extracting Business Insights
+**Python | Pandas | NumPy | Data Cleaning | Data Preprocessing | EDA | Data Analysis | Data Visualization | Statistical Analysis | Jupyter Notebook**
 
 ---
 
-## 👨‍💻 Author
+## 👤 Author
 
 **Prajwal NK**
 
-Electronics & Communication Engineering | Data Analytics Enthusiast
+Electronics & Communication Engineering | Data Analytics & Python
 
 ---
 
-⭐ If you find this project useful, consider giving the repository a star!
+## ⭐ Project Highlights
+
+**10,840 cleaned records | 13 features | 34 categories | 274 five-star apps | 10,039 free apps | 800 paid apps | 444K average reviews**
